@@ -25,7 +25,8 @@ struct Collateral: Codable {
     let value: Double
 }
 
-struct Document: Codable {
+struct Document: Codable, Identifiable {
+    var id: String { url }
     let type: String
     let url: String
 }
