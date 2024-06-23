@@ -1,7 +1,7 @@
 # LoanTracker
-API Endpoint: [https://raw.githubusercontent.com/andreascandle/p2p_json_test/main/api/json/loans.json]([https://www.swift.org/documentation/](https://raw.githubusercontent.com/andreascandle/p2p_json_test/main/api/json/loans.json))
+API Endpoint: [https://raw.githubusercontent.com/andreascandle/p2p_json_test/main/api/json/loans.json](https://raw.githubusercontent.com/andreascandle/p2p_json_test/main/api/json/loans.json)
 
-##Spesifikasi
+## Spesifikasi
 * Minimum Target iOS: iOS 13.0
 * Maximum Target iOS (Recommended): iOS 17.0
 * XCode Version: 15.4
