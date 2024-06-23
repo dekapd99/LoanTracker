@@ -22,7 +22,5 @@ extension URL {
     static var getAllLoans: URL {
         URL(string: "/andreascandle/p2p_json_test/main/api/json/loans.json", relativeTo: Self.default)!
     }
-    
-    
 
 }

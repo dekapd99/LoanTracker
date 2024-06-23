@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct LoanDetailView: View {
-    let loan: Loan
+    let loan: LoanModel
     private let baseURL = "https://raw.githubusercontent.com/andreascandle/p2p_json_test/main"
     
     var body: some View {
@@ -13,7 +13,7 @@ struct LoanDetailView: View {
                 Text("Credit Score: \(loan.borrower.creditScore)")
                 Divider()
                 Text("Collateral Type: \(loan.collateral.type)")
-                Text("Collateral Value: \(loan.collateral.value)")
+                Text("Collateral Value: \(loan.collateral.value, specifier: "%.0f")")
                 Divider()
                 Text("Repayment Schedule:")
                     .font(.headline)
@@ -21,7 +21,7 @@ struct LoanDetailView: View {
                     HStack {
                         Text("Due Date: \(installment.dueDate)")
                         Spacer()
-                        Text("Amount Due: \(installment.amountDue)")
+                        Text("Amount Due: \(installment.amountDue, specifier: "%.0f")")
                     }
                 }
                 Divider()
@@ -94,63 +94,30 @@ struct DocumentView: View {
     }
     
     private func loadImage(from url: URL) {
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            if let data = data, let loadedImage = UIImage(data: data) {
+        Task {
+            do {
+                let loadedImage = try await fetchImage(from: url)
                 DispatchQueue.main.async {
                     self.image = loadedImage
                     self.isLoading = false
                 }
-            } else {
+            } catch {
                 DispatchQueue.main.async {
                     self.isLoading = false
                 }
             }
-        }.resume()
+        }
     }
-}
-
-// Sample data for preview
-extension Loan {
-    static var sampleLoan: Loan {
-        return Loan(
-            id: "658539b43f5498ccae79105b",
-            amount: 5000,
-            interestRate: 0.8,
-            term: 120,
-            purpose: "Business Expansion",
-            riskRating: "C",
-            borrower: Borrower(
-                id: "658539b489fdaab6eae418f3",
-                name: "Shelly Valenzuela",
-                email: "shellyvalenzuela@orbaxter.com",
-                creditScore: 650
-            ),
-            collateral: Collateral(
-                type: "Real Estate",
-                value: 100000
-            ),
-            documents: [
-                Document(
-                    type: "Income Statement",
-                    url: "/loans/documents/income_statement/slip-gaji-karyawan-pertamina.jpeg"
-                )
-            ],
-            repaymentSchedule: RepaymentSchedule(
-                installments: [
-                    Installment(
-                        dueDate: "2023-01-15",
-                        amountDue: 500
-                    ),
-                    Installment(
-                        dueDate: "2023-02-15",
-                        amountDue: 500
-                    )
-                ]
-            )
-        )
+    
+    private func fetchImage(from url: URL) async throws -> UIImage {
+        let (data, _) = try await URLSession.shared.data(from: url)
+        guard let loadedImage = UIImage(data: data) else {
+            throw URLError(.badServerResponse)
+        }
+        return loadedImage
     }
 }
 
 #Preview {
-    LoanDetailView(loan: Loan.sampleLoan)
+    LoanDetailView(loan: LoanModel.mockLoanModel)
 }

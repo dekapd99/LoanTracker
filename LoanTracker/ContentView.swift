@@ -16,17 +16,17 @@ enum SortOrder: String, CaseIterable, Identifiable {
 }
 
 struct ContentView: View {
-    @ObservedObject var networkManager = APINetwork()
+    @ObservedObject var viewModel = LoanViewModel()
     @State private var searchQuery = ""
     @State private var selectedSortOption: SortOption = .borrowerName
     @State private var selectedSortOrder: SortOrder = .ascending
 
-    var filteredLoans: [Loan] {
-        let loans = searchQuery.isEmpty ? networkManager.loans : networkManager.loans.filter {
+    var filteredLoans: [LoanModel] {
+        let loans = searchQuery.isEmpty ? viewModel.loans : viewModel.loans.filter {
             $0.borrower.name.lowercased().contains(searchQuery.lowercased())
         }
         
-        let sortedLoans: [Loan]
+        let sortedLoans: [LoanModel]
         switch selectedSortOption {
         case .borrowerName:
             sortedLoans = loans.sorted { $0.borrower.name.lowercased() < $1.borrower.name.lowercased() }
@@ -66,8 +66,8 @@ struct ContentView: View {
                     NavigationLink(destination: LoanDetailView(loan: loan)) {
                         VStack(alignment: .leading) {
                             Text("Borrower: \(loan.borrower.name)").font(.headline)
-                            Text("Amount: \(loan.amount)")
-                            Text("Interest Rate: \(loan.interestRate * 100)%")
+                            Text("Amount: $\(loan.amount, specifier: "%.0f")")
+                            Text("Interest Rate: \(loan.interestRate * 100, specifier: "%.0f")%")
                             Text("Term: \(loan.term) months")
                             Text("Purpose: \(loan.purpose)")
                             Text("Risk Rating: \(loan.riskRating)")
@@ -75,7 +75,7 @@ struct ContentView: View {
                     }
                 }
                 .onAppear {
-                    networkManager.fetchLoans()
+                    viewModel.fetchLoans()
                 }
             }
 //            .navigationTitle("Loans")
