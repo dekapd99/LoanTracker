@@ -23,4 +23,7 @@ extension URL {
         URL(string: "/andreascandle/p2p_json_test/main/api/json/loans.json", relativeTo: Self.default)!
     }
 
+    static var getImageDocument: URL {
+        URL(string: "/andreascandle/p2p_json_test/main", relativeTo: Self.default)!
+    }
 }

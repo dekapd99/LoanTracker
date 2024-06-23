@@ -42,8 +42,9 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             VStack {
-                TextField("Search by Borrower Name", text: $searchQuery)
-                    .padding()
+                TextField("Search by Name", text: $searchQuery)
+                    .padding(.vertical, 4)
+                    .padding(.horizontal)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                 
                 Picker("Sort by", selection: $selectedSortOption) {
@@ -52,7 +53,8 @@ struct ContentView: View {
                     }
                 }
                 .pickerStyle(SegmentedPickerStyle())
-                .padding()
+                .padding(.vertical, 4)
+                .padding(.horizontal)
 
                 Picker("Order", selection: $selectedSortOrder) {
                     ForEach(SortOrder.allCases) { order in
@@ -60,25 +62,24 @@ struct ContentView: View {
                     }
                 }
                 .pickerStyle(SegmentedPickerStyle())
-                .padding()
+                .padding(.vertical, 8)
+                .padding(.horizontal)
                 
-                List(filteredLoans) { loan in
-                    NavigationLink(destination: LoanDetailView(loan: loan)) {
-                        VStack(alignment: .leading) {
-                            Text("Borrower: \(loan.borrower.name)").font(.headline)
-                            Text("Amount: $\(loan.amount, specifier: "%.0f")")
-                            Text("Interest Rate: \(loan.interestRate * 100, specifier: "%.0f")%")
-                            Text("Term: \(loan.term) months")
-                            Text("Purpose: \(loan.purpose)")
-                            Text("Risk Rating: \(loan.riskRating)")
+                ScrollView {
+                    VStack(spacing: 16) {
+                        ForEach(filteredLoans) { loan in
+                            NavigationLink(destination: LoanDetailView(loan: loan)) {
+                                CardComponent(loan: loan)
+                            }
                         }
                     }
+                    .padding()
                 }
                 .onAppear {
                     viewModel.fetchLoans()
                 }
             }
-//            .navigationTitle("Loans")
+            .navigationBarTitle("Loans Tracker List")
         }
     }
 }
