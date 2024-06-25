@@ -47,12 +47,22 @@ git clone https://github.com/dekapd99/LoanTracker.git
 
 ## Simulation & Approach
 1. Fetching Loan Data from Provided API and Display the Information from API in a Custom Card. 
-
+<p align="center">
+  <a href="#" target="_blank"><img src="display-api.gif" width="200"></a>
+</p>
 
 2. Display Detail Information in a Custom Card
-
+<p align="center">
+  <a href="#" target="_blank"><img src="2.gif" width="200"></a>
+</p>
 
 3. Adding Search Feature
-
+<p align="center">
+  <a href="#" target="_blank"><img src="4.gif" width="200"></a>
+</p>
 
 4. Adding Sort Feature
+
+<p align="center">
+  <a href="#" target="_blank"><img src="3.gif" width="200"></a>
+</p>
