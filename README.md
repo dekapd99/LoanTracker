@@ -46,7 +46,7 @@ git clone https://github.com/dekapd99/LoanTracker.git
 4. Build & Run (CMD + R).
 
 ## Simulation & Approach
-1. Fetching Loan Data from Provided API and Display the Information from API in a Custom Card
+1. Fetching Loan Data from Provided API and Display the Information from API in a Custom Card. 
 
 
 2. Display Detail Information in a Custom Card
@@ -55,7 +55,4 @@ git clone https://github.com/dekapd99/LoanTracker.git
 3. Adding Search Feature
 
 
-4. MVVM Structure
-
-
-5. Adding Sort Feature
+4. Adding Sort Feature
